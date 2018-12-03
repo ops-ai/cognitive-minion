@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.106
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CognitiveMinion.UserServices", "CognitiveMinion.UserServices\CognitiveMinion.UserServices.csproj", "{B60F816D-9005-440A-929B-6BDDD9D320BE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{14F8DDC8-4B3F-4B5D-9852-75C946B240DC}"
+	ProjectSection(SolutionItems) = preProject
+		LICENSE = LICENSE
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CognitiveMinion", "CognitiveMinion\CognitiveMinion.csproj", "{A602A2C8-4723-4033-915B-E16C7E4529F4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B60F816D-9005-440A-929B-6BDDD9D320BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B60F816D-9005-440A-929B-6BDDD9D320BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B60F816D-9005-440A-929B-6BDDD9D320BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B60F816D-9005-440A-929B-6BDDD9D320BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A602A2C8-4723-4033-915B-E16C7E4529F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A602A2C8-4723-4033-915B-E16C7E4529F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A602A2C8-4723-4033-915B-E16C7E4529F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A602A2C8-4723-4033-915B-E16C7E4529F4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B9C542B7-0B8A-4325-B28C-7EC602F863D5}
+	EndGlobalSection
+EndGlobal
