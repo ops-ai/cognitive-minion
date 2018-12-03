@@ -1,43 +1,68 @@
 ﻿using System;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
+using CognitiveMinion.Storage.RavenDB;
 using CognitiveMinion.UserServices.Email;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using NLog;
+using Raven.Client;
+using Raven.Client.Documents;
+using ILogger = NLog.ILogger;
 
 namespace CognitiveMinion.UserServices
 {
     public class Program
     {
-        private static readonly ILogger Logger = LogManager.GetCurrentClassLogger();
-
         private static async Task Main(string[] args)
         {
-            var serviceProvider = new ServiceCollection()
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
 
-                .BuildServiceProvider();
+            IConfigurationRoot configuration = builder.Build();
 
-            Logger.Info("Application started...");
+            var services = new ServiceCollection();
+
+            services.AddSingleton(typeof(IDocumentStore), new DocumentStore
+            {
+                Urls = new[] { configuration["Raven:Url"] },
+                Database = configuration["Raven:Database"],
+                Certificate = configuration.GetSection("Raven:EncryptionEnabled").Get<bool>() ? new X509Certificate2(configuration["Raven:CertFile"], configuration["Raven:CertPassword"]) : null
+            }.Initialize());
+
+            services.AddSingleton<IMinionRequestStore, RavenDbStore>();
+
+
+            var serviceProvider = services.BuildServiceProvider();
+
+            var logger = serviceProvider.GetService<ILoggerFactory>()
+                .CreateLogger<Program>();
+
+            logger.LogInformation("Application started...");
 
             var isService = !(Debugger.IsAttached || args.Contains("--console"));
 
-            var builder = new HostBuilder()
-                .ConfigureServices((hostContext, services) =>
+            var serviceBuilder = new HostBuilder()
+                .ConfigureServices((hostContext, serviceCollection) =>
                 {
-                    services.AddHostedService<EmailProcessor>();
+                    serviceCollection.AddHostedService<EmailProcessor>();
                 });
 
             if (isService)
             {
-                Logger.Info("Application run as service");
-                await builder.RunAsServiceAsync();
+                logger.LogInformation("Application run as service");
+                await serviceBuilder.RunAsServiceAsync();
             }
             else
             {
-                Logger.Info("Application run as console application");
-                await builder.RunConsoleAsync();
+                logger.LogInformation("Application run as console application");
+                await serviceBuilder.RunConsoleAsync();
             }
         }
     }
