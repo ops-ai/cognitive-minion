@@ -1,5 +1,8 @@
 # Cognitive Minion
 
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=ops-ai_cognitive-minion&metric=alert_status)](https://sonarcloud.io/dashboard?id=ops-ai_cognitive-minion)
+[![Build Status](https://opsai.visualstudio.com/Cognitive%20Minion/_apis/build/status/ops-ai.cognitive-minion?branchName=master)](https://opsai.visualstudio.com/Cognitive%20Minion/_build/latest?definitionId=1&branchName=master)
+
 ## Alexa for business process automation. 
 We had a lot of simple scripts created as xUnit tests in our projects to deal with custom requests that came up from time to time, but for which we didn't have time (or weren't worth the time) to create a UI for, or require an extra validation step by someone on our team to make sure it's ok to make that change.
 This inlcudes things like whitelisting IP addresses for admin access, or moving a user to a different department in a customer's organization, both of which can have security consequences for example, or things like our IT dealing with hundreds of email distribution list creations and changes to name a few.
