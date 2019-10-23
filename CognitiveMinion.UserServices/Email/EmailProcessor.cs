@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Hosting;
@@ -48,7 +46,10 @@ namespace CognitiveMinion.UserServices.Email
 
         protected virtual void Dispose(bool disposing)
         {
-            if (_disposed) return;
+            if (_disposed)
+            {
+                return;
+            }
 
             //TODO: Cleanup when the service is disposed
 

@@ -10,10 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using NLog;
-using Raven.Client;
 using Raven.Client.Documents;
-using ILogger = NLog.ILogger;
 
 namespace CognitiveMinion.UserServices
 {
