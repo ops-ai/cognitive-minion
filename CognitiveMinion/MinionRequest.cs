@@ -11,6 +11,11 @@ namespace CognitiveMinion
         public string Id { get; set; }
 
         /// <summary>
+        /// The raw text of the request
+        /// </summary>
+        public string Request { get; set; }
+
+        /// <summary>
         /// Identified intent name
         /// </summary>
         public string IntentName { get; set; }
@@ -18,7 +23,7 @@ namespace CognitiveMinion
         /// <summary>
         /// Detected parameters
         /// </summary>
-        public Dictionary<string, string> IntentParameters { get; set; }
+        public Dictionary<string, string> IntentParameters { get; set; } = new Dictionary<string, string>();
 
         /// <summary>
         /// Request status
@@ -28,12 +33,12 @@ namespace CognitiveMinion
         /// <summary>
         /// Date the request was received
         /// </summary>
-        public DateTime DateRequestedUtc { get; set; }
+        public DateTime DateRequestedUtc { get; set; } = DateTime.UtcNow;
 
         /// <summary>
         /// Date the request expires
         /// </summary>
-        public DateTime ExpirationUtc { get; set; }
+        public DateTime ExpirationUtc { get; set; } = DateTime.UtcNow.AddMonths(1);
 
         /// <summary>
         /// The unique secret key for confirming or cancelling the request

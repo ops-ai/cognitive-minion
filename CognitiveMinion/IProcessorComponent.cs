@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace CognitiveMinion
+﻿namespace CognitiveMinion
 {
     public interface IProcessorComponent
     {
