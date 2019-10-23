@@ -17,11 +17,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Storage", "Storage", "{BDC5
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CognitiveMinion.Storage.RavenDB", "Storage\CognitiveMinion.Storage.RavenDB\CognitiveMinion.Storage.RavenDB.csproj", "{A85C2FA8-27B6-4F11-AD58-D5A643848177}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CognitiveMinion.Api", "CognitiveMinion.Api\CognitiveMinion.Api.csproj", "{F723FB06-F3B6-442D-B11A-3B4FFD8DD65B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CognitiveMinion.Api", "CognitiveMinion.Api\CognitiveMinion.Api.csproj", "{F723FB06-F3B6-442D-B11A-3B4FFD8DD65B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{EC5D0EAF-FFF1-4446-9026-14BC55E3FF8D}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
+		azure-pipelines.yml = azure-pipelines.yml
 	EndProjectSection
 EndProject
 Global
