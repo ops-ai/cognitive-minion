@@ -23,7 +23,7 @@ namespace CognitiveMinion
         /// <summary>
         /// Detected parameters
         /// </summary>
-        public Dictionary<string, string> IntentParameters { get; set; } = new Dictionary<string, string>();
+        public Dictionary<string, object> IntentParameters { get; set; } = new Dictionary<string, object>();
 
         /// <summary>
         /// Request status
