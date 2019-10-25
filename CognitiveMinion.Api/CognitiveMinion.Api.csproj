@@ -13,7 +13,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\CognitiveMinion.UserServices\CognitiveMinion.UserServices.csproj" />
     <ProjectReference Include="..\CognitiveMinion\CognitiveMinion.csproj" />
+    <ProjectReference Include="..\Language Understanding\CognitiveMinion.LanguageUnderstanding.LuisAI\CognitiveMinion.LanguageUnderstanding.LuisAI.csproj" />
     <ProjectReference Include="..\Storage\CognitiveMinion.Storage.RavenDB\CognitiveMinion.Storage.RavenDB.csproj" />
   </ItemGroup>
 
