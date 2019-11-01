@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using CognitiveMinion.Api.Extensions;
+﻿using CognitiveMinion.Api.Extensions;
 using CognitiveMinion.Api.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace CognitiveMinion.Api.Controllers
 {
@@ -56,10 +55,7 @@ namespace CognitiveMinion.Api.Controllers
         /// <returns></returns>
         [Authorize]
         [HttpGet("{id}")]
-        public async Task<ActionResult> Get(string id, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
+        public async Task<ActionResult> Get(string id, CancellationToken cancellationToken) => throw new NotImplementedException();
 
         /// <summary>
         /// Submit a new request
@@ -67,9 +63,6 @@ namespace CognitiveMinion.Api.Controllers
         /// <param name="model">Request information</param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult> Post([FromBody]MinionRequestModel model, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
+        public async Task<ActionResult> Post([FromBody]MinionRequestModel model, CancellationToken cancellationToken) => throw new NotImplementedException();
     }
 }

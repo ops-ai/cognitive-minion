@@ -1,8 +1,8 @@
-﻿using System;
+﻿using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 
 namespace CognitiveMinion.UserServices.Email
 {
@@ -13,10 +13,7 @@ namespace CognitiveMinion.UserServices.Email
         private bool _notStopped;
         private readonly ILogger _logger;
 
-        public EmailProcessor(ILoggerFactory loggerFactory)
-        {
-            _logger = loggerFactory.CreateLogger<EmailProcessor>();
-        }
+        public EmailProcessor(ILoggerFactory loggerFactory) => _logger = loggerFactory.CreateLogger<EmailProcessor>();
 
         public Task StartAsync(CancellationToken cancellationToken)
         {

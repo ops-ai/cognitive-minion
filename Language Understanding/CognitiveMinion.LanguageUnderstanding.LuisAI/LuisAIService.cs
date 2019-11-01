@@ -1,30 +1,48 @@
-﻿using System.Threading.Tasks;
-using Microsoft.Azure.CognitiveServices.Language.LUIS.Runtime;
-using Microsoft.Azure.CognitiveServices.Language.LUIS.Runtime.Models;
+﻿using Microsoft.Azure.CognitiveServices.Language.LUIS.Runtime.Models;
 using Microsoft.Extensions.Options;
+using System.Net.Http;
+using System.Threading.Tasks;
+using System.Web;
 
 namespace CognitiveMinion.LanguageUnderstanding.LuisAI
 {
     public class LuisAIService : IUnderstandingService
     {
         private readonly LuisAiSettings _luisSettings;
+        private readonly IHttpClientFactory _httpClientFactory;
 
-        public LuisAIService(IOptions<LuisAiSettings> luisSettings)
+        public LuisAIService(IOptions<LuisAiSettings> luisSettings, IHttpClientFactory httpClientFactory)
         {
             _luisSettings = luisSettings.Value;
+            _httpClientFactory = httpClientFactory;
         }
 
         public async Task<PredictionResult> PredictIntent(string query)
         {
-            var luisClient = new LUISRuntimeClient(new ApiKeyServiceClientCredentials(_luisSettings.SubscriptionKey), new System.Net.Http.DelegatingHandler[] { });
-            luisClient.Endpoint = $"https://{_luisSettings.Region}.api.cognitive.microsoft.com";
+            var client = _httpClientFactory.CreateClient("LuisAI");
 
-            var slot = await luisClient.Prediction.GetSlotPredictionAsync(_luisSettings.AppId, _luisSettings.Slot, new PredictionRequest(query), true, false, true);
-            var result = new PredictionResult { IntentName = slot.Prediction.TopIntent, IntentParameters = slot.Prediction.Entities, Score = slot.Prediction.Intents[slot.Prediction.TopIntent].Score };
+            var queryString = HttpUtility.ParseQueryString(string.Empty);
+
+            // The request header contains your subscription key
+            client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", _luisSettings.SubscriptionKey);
+
+            // The "q" parameter contains the utterance to send to LUIS
+            queryString["q"] = query;
+
+            // These optional request parameters are set to their default values
+            queryString["timezoneOffset"] = "0";
+            queryString["verbose"] = "false";
+            queryString["spellCheck"] = "false";
+            queryString["staging"] = (_luisSettings.Slot == "Staging").ToString().ToLower();
+
+            var endpointUri = $"https://{_luisSettings.Region}.api.cognitive.microsoft.com/luis/v2.0/apps/" + _luisSettings.AppId + "?" + queryString;
+            var response = await client.GetAsync(endpointUri);
+
+            var predictionResult = await response.Content.ReadAsAsync<PredictionResponse>();
+
+            var result = new PredictionResult { IntentName = predictionResult.Prediction.TopIntent, IntentParameters = predictionResult.Prediction.Entities, Score = predictionResult.Prediction.Intents[predictionResult.Prediction.TopIntent].Score };
 
             return result;
         }
-
-
     }
 }

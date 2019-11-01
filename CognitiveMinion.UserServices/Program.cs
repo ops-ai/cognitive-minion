@@ -1,16 +1,16 @@
-﻿using System;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Threading.Tasks;
-using CognitiveMinion.Storage.RavenDB;
+﻿using CognitiveMinion.Storage.RavenDB;
 using CognitiveMinion.UserServices.Email;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Raven.Client.Documents;
+using System;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using System.Security.Cryptography.X509Certificates;
+using System.Threading.Tasks;
 
 namespace CognitiveMinion.UserServices
 {
@@ -22,7 +22,7 @@ namespace CognitiveMinion.UserServices
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
 
-            IConfigurationRoot configuration = builder.Build();
+            var configuration = builder.Build();
 
             var services = new ServiceCollection();
 

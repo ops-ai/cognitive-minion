@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using CognitiveMinion.Api.Extensions;
+﻿using CognitiveMinion.Api.Extensions;
 using CognitiveMinion.Api.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace CognitiveMinion.Api.Controllers
 {
@@ -102,12 +101,12 @@ namespace CognitiveMinion.Api.Controllers
             try
             {
                 var id = await _requestStore.StoreRequest(new MinionRequest { Request = model.Request }, cancellationToken);
-                
+
                 //send to IntentResolverService which will update in db once processed, then send for approval
 
                 return Accepted(Url.Action(nameof(Get), nameof(RequestsController), new { id }));
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 _logger.LogError(ex, "Error receiving request");
                 throw;

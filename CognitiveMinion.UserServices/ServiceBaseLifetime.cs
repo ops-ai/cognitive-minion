@@ -1,8 +1,8 @@
-﻿using System;
+﻿using Microsoft.Extensions.Hosting;
+using System;
 using System.ServiceProcess;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Hosting;
 
 namespace CognitiveMinion.UserServices
 {
@@ -12,10 +12,7 @@ namespace CognitiveMinion.UserServices
     {
         private readonly TaskCompletionSource<object> _delayStart = new TaskCompletionSource<object>();
 
-        public ServiceBaseLifetime(IApplicationLifetime applicationLifetime)
-        {
-            ApplicationLifetime = applicationLifetime ?? throw new ArgumentNullException(nameof(applicationLifetime));
-        }
+        public ServiceBaseLifetime(IApplicationLifetime applicationLifetime) => ApplicationLifetime = applicationLifetime ?? throw new ArgumentNullException(nameof(applicationLifetime));
 
         private IApplicationLifetime ApplicationLifetime { get; }
 

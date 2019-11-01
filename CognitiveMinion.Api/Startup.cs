@@ -1,18 +1,18 @@
-﻿using CognitiveMinion.LanguageUnderstanding.LuisAI;
+﻿using CognitiveMinion.Api.Services;
+using CognitiveMinion.LanguageUnderstanding.LuisAI;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Polly;
+using System;
 
 namespace CognitiveMinion.Api
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
-        {
-            Configuration = configuration;
-        }
+        public Startup(IConfiguration configuration) => Configuration = configuration;
 
         public IConfiguration Configuration { get; }
 
@@ -22,6 +22,22 @@ namespace CognitiveMinion.Api
             services.AddOptions<LuisAiSettings>("LuisAI");
 
             services.AddControllers();
+
+
+            services.AddHttpClient<IIdentityServerClient, IdentityServerClient>(client =>
+            {
+                client.BaseAddress = new Uri(Configuration["SSOAuthorityUrl"]);
+                client.DefaultRequestHeaders.Add("Accept", "application/json");
+            }).AddTransientHttpErrorPolicy(builder => builder.WaitAndRetryAsync(new[]
+            {
+                TimeSpan.FromSeconds(1),
+                TimeSpan.FromSeconds(2),
+                TimeSpan.FromSeconds(3)
+            }));
+
+            services.AddTransient<ProtectedApiBearerTokenHandler>();
+            services.AddHttpClient("LuisAI", client => { /*client.BaseAddress = new Uri(Configuration["LuisAIUrl"]);*/ });
+            services.AddHttpClient("JsnLogger");
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
