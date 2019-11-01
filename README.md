@@ -44,6 +44,9 @@ CognitiveMinion is Copyright (C) 2018 opsAI and is licensed under the MIT licens
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
     THE SOFTWARE.
 
+## Luis.AI REST API docs
+https://westus.dev.cognitive.microsoft.com/docs/services/5890b47c39e2bb17b84a55ff/operations/5890b47c39e2bb052c5b9c2f
+
 	
 ## Installing via NuGet
 

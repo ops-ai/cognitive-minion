@@ -1,10 +1,10 @@
-﻿using System;
+﻿using Microsoft.Extensions.Logging;
+using Raven.Client.Documents;
+using Raven.Client.Documents.Linq;
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Logging;
-using Raven.Client.Documents;
-using Raven.Client.Documents.Linq;
 
 namespace CognitiveMinion.Storage.RavenDB
 {
@@ -72,7 +72,7 @@ namespace CognitiveMinion.Storage.RavenDB
                 using (var session = _store.OpenAsyncSession())
                 {
                     var requests = await session.Query<MinionRequest>().OrderByDescending(t => t.Id).Skip(skip).Take(take).ToListAsync(ct);
-                    
+
                     return requests;
                 }
             }

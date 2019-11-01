@@ -14,9 +14,6 @@ namespace CognitiveMinion.Api.Extensions
         /// Initializes a new instance of the Microsoft.AspNetCore.Mvc.OkObjectResult class.
         /// </summary>
         /// <param name="value">The content to format into the entity body.</param>
-        public PartialObjectResult(object value) : base(value)
-        {
-            StatusCode = StatusCodes.Status206PartialContent;
-        }
+        public PartialObjectResult(object value) : base(value) => StatusCode = StatusCodes.Status206PartialContent;
     }
 }

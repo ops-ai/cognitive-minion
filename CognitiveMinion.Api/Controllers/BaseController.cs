@@ -11,9 +11,6 @@ namespace CognitiveMinion.Api.Controllers
         /// <param name="value">The content value to format in the entity body.</param>
         /// <returns>The created Microsoft.AspNetCore.Mvc.PartialObjectResult for the response.</returns>
         [NonAction]
-        public PartialObjectResult Partial(object value)
-        {
-            return new PartialObjectResult(value);
-        }
+        public PartialObjectResult Partial(object value) => new PartialObjectResult(value);
     }
 }
