@@ -7,7 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Elastic.Apm.AspNetCore" Version="1.1.2" />
     <PackageReference Include="IdentityModel" Version="4.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="3.0.0" />
     <PackageReference Include="Microsoft.Extensions.Http" Version="3.0.0" />
     <PackageReference Include="Microsoft.Extensions.Http.Polly" Version="3.0.0" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="3.0.0" />
@@ -25,6 +27,12 @@
     <ProjectReference Include="..\CognitiveMinion\CognitiveMinion.csproj" />
     <ProjectReference Include="..\Language Understanding\CognitiveMinion.LanguageUnderstanding.LuisAI\CognitiveMinion.LanguageUnderstanding.LuisAI.csproj" />
     <ProjectReference Include="..\Storage\CognitiveMinion.Storage.RavenDB\CognitiveMinion.Storage.RavenDB.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Minion.pfx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
