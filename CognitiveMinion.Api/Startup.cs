@@ -1,5 +1,6 @@
 ﻿using CognitiveMinion.Api.Services;
 using CognitiveMinion.LanguageUnderstanding.LuisAI;
+using Elastic.Apm.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -34,6 +35,7 @@ namespace CognitiveMinion.Api
                 TimeSpan.FromSeconds(2),
                 TimeSpan.FromSeconds(3)
             }));
+            services.AddMemoryCache();
 
             services.AddTransient<ProtectedApiBearerTokenHandler>();
             services.AddHttpClient("LuisAI", client => { /*client.BaseAddress = new Uri(Configuration["LuisAIUrl"]);*/ });
@@ -43,6 +45,8 @@ namespace CognitiveMinion.Api
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseElasticApm(Configuration);
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
