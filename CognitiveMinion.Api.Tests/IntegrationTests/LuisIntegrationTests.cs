@@ -34,6 +34,7 @@ namespace CognitiveMinion.Api.Tests
             Configuration = new ConfigurationBuilder()
                 .AddJsonFile("appsettings.json", false, true)
                 .AddJsonFile("appsettings.local.json", true, true)
+                .AddJsonFile("appsettings.Development.json", true, true)
                 .AddJsonFile("appsettings.test.json", true)
                 .AddEnvironmentVariables()
                 .Build();
@@ -46,7 +47,7 @@ namespace CognitiveMinion.Api.Tests
             {
                 builder.ConfigureServices(t =>
                 {
-                    t.AddHttpClient("LuisAI", client => { client.BaseAddress = new Uri(Configuration["IdPManagerApiUrl"]); }).ConfigureHttpMessageHandlerBuilder(s => s.PrimaryHandler = _luisAiHttpHandler.Object);
+                    t.AddHttpClient("LuisAI", client => { /*client.BaseAddress = new Uri(Configuration["LuisAIUrl"]);*/ }).ConfigureHttpMessageHandlerBuilder(s => s.PrimaryHandler = _luisAiHttpHandler.Object);
                 })
                 .ConfigureTestServices(services =>
                 {
@@ -68,7 +69,8 @@ namespace CognitiveMinion.Api.Tests
         public async Task TestBasicIntentDetection()
         {
             var mockHttpFactory = new Mock<IHttpClientFactory>();
-            var luis = new LuisAIService(Options.Create<LuisAiSettings>(new LuisAiSettings { AppId = Guid.Parse(""), Region = "", Slot = "", SubscriptionKey = "" }), mockHttpFactory.Object);
+            mockHttpFactory.Setup(t => t.CreateClient(It.IsAny<string>())).Returns(new HttpClient());
+            var luis = new LuisAIService(Options.Create(new LuisAiSettings { AppId = Guid.Parse(Configuration["LuisAI:AppId"]), Region = Configuration["LuisAI:Region"], Slot = Configuration["LuisAI:Slot"], SubscriptionKey = Configuration["LuisAI:SubscriptionKey"] }), mockHttpFactory.Object);
             var result = await luis.PredictIntent("please whitelist 10.10.10.10 for me");
 
 
