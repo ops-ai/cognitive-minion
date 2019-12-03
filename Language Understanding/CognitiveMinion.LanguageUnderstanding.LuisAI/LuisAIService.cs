@@ -1,5 +1,6 @@
-﻿using Microsoft.Azure.CognitiveServices.Language.LUIS.Runtime.Models;
+﻿using CognitiveMinion.LanguageUnderstanding.LuisAI.Models;
 using Microsoft.Extensions.Options;
+using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
@@ -35,12 +36,12 @@ namespace CognitiveMinion.LanguageUnderstanding.LuisAI
             queryString["spellCheck"] = "false";
             queryString["staging"] = (_luisSettings.Slot == "Staging").ToString().ToLower();
 
-            var endpointUri = $"https://{_luisSettings.Region}.api.cognitive.microsoft.com/luis/v2.0/apps/" + _luisSettings.AppId + "?" + queryString;
+            var endpointUri = $"https://{_luisSettings.Region}.api.cognitive.microsoft.com/luis/v2.0/apps/{_luisSettings.AppId}?{queryString}";
             var response = await client.GetAsync(endpointUri);
 
             var predictionResult = await response.Content.ReadAsAsync<PredictionResponse>();
 
-            var result = new PredictionResult { IntentName = predictionResult.Prediction.TopIntent, IntentParameters = predictionResult.Prediction.Entities, Score = predictionResult.Prediction.Intents[predictionResult.Prediction.TopIntent].Score };
+            var result = new PredictionResult { IntentName = predictionResult.TopScoringIntent.Intent, IntentParameters = predictionResult.CompositeEntities.ToDictionary(t => t.ParentType, t => t.Value), Score = predictionResult.TopScoringIntent.Score };
 
             return result;
         }
