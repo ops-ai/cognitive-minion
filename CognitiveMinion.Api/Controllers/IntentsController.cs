@@ -25,7 +25,7 @@ namespace CognitiveMinion.Api.Controllers
         }
 
         /// <summary>
-        /// Returns a list of known intents
+        /// Returns a list of known intents, things that are possible to understand
         /// </summary>
         /// <param name="range">Result range to return. Format: 0-19 (result index from - result index to)</param>
         /// <returns></returns>
