@@ -1,4 +1,5 @@
-﻿using CognitiveMinion.Api.Services;
+﻿using CognitiveMinion.Api.Hubs;
+using CognitiveMinion.Api.Services;
 using CognitiveMinion.LanguageUnderstanding.LuisAI;
 using Elastic.Apm.AspNetCore;
 using Microsoft.AspNetCore.Builder;
@@ -40,6 +41,8 @@ namespace CognitiveMinion.Api
             services.AddTransient<ProtectedApiBearerTokenHandler>();
             services.AddHttpClient("LuisAI", client => { /*client.BaseAddress = new Uri(Configuration["LuisAIUrl"]);*/ });
             services.AddHttpClient("JsnLogger");
+
+            services.AddSignalR();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -61,6 +64,7 @@ namespace CognitiveMinion.Api
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHub<ProcessingHub>("/processing");
             });
         }
     }
